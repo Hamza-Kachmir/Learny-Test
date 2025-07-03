@@ -1,0 +1,11 @@
+# Fichiers de cache Python
+__pycache__/
+*.pyc
+
+# Fichiers d'environnement virtuels
+.venv
+venv/
+env/
+
+# Fichiers système
+.DS_Store
