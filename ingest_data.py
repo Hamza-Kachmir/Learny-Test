@@ -54,6 +54,7 @@ def fetch_youtube_data(query):
         relevanceLanguage="fr"
     ).execute()
 
+
     
     videos = []
     for item in search_response.get("items", []):
@@ -82,6 +83,7 @@ def update_database(videos):
         existing_ids = pd.read_sql_query("SELECT video_id FROM videos", conn)
         df = df[~df['video_id'].isin(existing_ids['video_id'])]
     except pd.io.sql.DatabaseError:
+        # La table est vide, on garde tout le dataframe
         pass
 
     if not df.empty:
@@ -92,6 +94,7 @@ def update_database(videos):
     
     conn.close()
 
+# --- SCRIPT PRINCIPAL ---
 if __name__ == "__main__":
     create_database()
     for query in SEARCH_QUERIES:
