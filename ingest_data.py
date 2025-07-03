@@ -47,7 +47,7 @@ def fetch_youtube_data(query):
     youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=API_KEY)
     
     # Ligne corrigée
-    search_response = Youtube().list(
+    search_response = youtube().list(
         q=query,
         part="snippet",
         maxResults=25,
