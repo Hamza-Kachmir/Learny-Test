@@ -46,10 +46,8 @@ def create_database():
 
 def fetch_youtube_data(query):
     """Interroge l'API YouTube et retourne une liste de vidéos."""
-    # La variable s'appelle 'youtube' (minuscule)
     youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=API_KEY)
     
-    # Ligne corrigée : on utilise la variable 'youtube' (minuscule) et .search()
     search_response = Youtube().list(
         q=query,
         part="snippet",
@@ -81,9 +79,12 @@ def update_database(videos):
     conn = sqlite3.connect(DB_FILE)
     df = pd.DataFrame(videos)
     
-    # Construit une clause pour ne pas insérer les IDs qui existent déjà
-    existing_ids = pd.read_sql_query("SELECT video_id FROM videos", conn)
-    df = df[~df['video_id'].isin(existing_ids['video_id'])]
+    try:
+        existing_ids = pd.read_sql_query("SELECT video_id FROM videos", conn)
+        df = df[~df['video_id'].isin(existing_ids['video_id'])]
+    except pd.io.sql.DatabaseError:
+        # La table est vide, on garde tout le dataframe
+        pass
 
     if not df.empty:
         df.to_sql('videos', conn, if_exists='append', index=False)
