@@ -46,13 +46,14 @@ def fetch_youtube_data(query):
     """Interroge l'API YouTube et retourne une liste de vidéos."""
     youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=API_KEY)
     
-    search_response = Youtube().list(
+    search_response = youtube.list(
         q=query,
         part="snippet",
         maxResults=25,
         type="video",
         relevanceLanguage="fr"
     ).execute()
+
     
     videos = []
     for item in search_response.get("items", []):
