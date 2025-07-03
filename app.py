@@ -22,7 +22,6 @@ def search_videos(search_term):
 # --- Interface Utilisateur ---
 st.set_page_config(page_title="Learny", layout="wide")
 
-# Affiche le logo dans la barre latérale
 st.sidebar.image("assets/learny.png")
 st.sidebar.title("Learny 🎓")
 

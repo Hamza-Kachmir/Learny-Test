@@ -1,6 +1,5 @@
 name: Ingest YouTube Data
 
-# Permet de lancer ce workflow manuellement depuis l'onglet "Actions" de GitHub
 on:
   workflow_dispatch:
 
@@ -9,29 +8,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Récupère le code de ton dépôt
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Installe Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.9'
 
-      # 3. Installe les librairies nécessaires
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      # 4. Exécute le script d'ingestion qui va créer le fichier learny.db
       - name: Run data ingestion script
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: python ingest_data.py
 
-      # 5. Fait un "commit" et un "push" automatiques du fichier learny.db
       - name: Commit database
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
