@@ -46,7 +46,8 @@ def fetch_youtube_data(query):
     """Interroge l'API YouTube et retourne une liste de vidéos."""
     youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=API_KEY)
     
-    search_response = youtube().list(
+    # Ligne corrigée
+    search_response = Youtube().list(
         q=query,
         part="snippet",
         maxResults=25,
@@ -81,6 +82,7 @@ def update_database(videos):
         existing_ids = pd.read_sql_query("SELECT video_id FROM videos", conn)
         df = df[~df['video_id'].isin(existing_ids['video_id'])]
     except pd.io.sql.DatabaseError:
+        # La table est vide, on garde tout le dataframe
         pass
 
     if not df.empty:
@@ -91,6 +93,7 @@ def update_database(videos):
     
     conn.close()
 
+# --- SCRIPT PRINCIPAL ---
 if __name__ == "__main__":
     create_database()
     for query in SEARCH_QUERIES:
