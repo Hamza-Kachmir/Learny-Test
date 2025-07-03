@@ -49,7 +49,7 @@ def fetch_youtube_data(query):
     # La variable s'appelle 'youtube' (minuscule)
     youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=API_KEY)
     
-    # On utilise la variable 'youtube' (minuscule) ici
+    # Ligne corrigée : on utilise la variable 'youtube' (minuscule) et .search()
     search_response = Youtube().list(
         q=query,
         part="snippet",
