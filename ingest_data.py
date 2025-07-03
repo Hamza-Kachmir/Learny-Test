@@ -46,12 +46,14 @@ def create_database():
 
 def fetch_youtube_data(query):
     """Interroge l'API YouTube et retourne une liste de vidéos."""
+    # La variable s'appelle 'youtube' (minuscule)
     youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=API_KEY)
     
+    # On utilise la variable 'youtube' (minuscule) ici
     search_response = Youtube().list(
         q=query,
         part="snippet",
-        maxResults=25,  # On prend 25 résultats par recherche
+        maxResults=25,
         type="video",
         relevanceLanguage="fr"
     ).execute()
